@@ -1,22 +1,47 @@
 const Outer = document.querySelector(".Outer");
-for (let i =0; i<16; i++){
-    div = document.createElement("div");
-    div.classList.add("row");
-    div.style.display = "flex";
-    for (let k = 0; k <16; k++){
-        innerdiv = document.createElement("div");
-        innerdiv.classList.add("box");
-        innerdiv.style.border = "2px solid black";
-        innerdiv.style.height = "40px";
-        innerdiv.style.width="40px";
-        div.appendChild(innerdiv);
+const button = document.querySelector("button");
+let boxes = [];
+function removeBoxes(){
+    console.log(boxes);
+    boxes.forEach((box) => {
+        box.remove();
+    });
+};
+
+function defineGrid(size){
+    boxes = document.querySelectorAll(".box");
+    if (boxes.length>0){
+        removeBoxes();
     }
-    Outer.appendChild(div);
+    for (let i =0; i<size; i++){
+        div = document.createElement("div");
+        div.classList.add("row");
+        div.style.display = "flex";
+        for (let k = 0; k <size; k++){
+            innerdiv = document.createElement("div");
+            innerdiv.classList.add("box");
+            innerdiv.style.border = "2px solid black";
+            innerdiv.style.height = "40px";
+            innerdiv.style.width="40px";
+            div.appendChild(innerdiv);
+        }
+        Outer.appendChild(div);
+    }
+    boxes = document.querySelectorAll(".box"); 
+    attachHoverListeners();
 }
 
-let boxes = document.querySelectorAll(".box");
-boxes.forEach((box) => {
-    box.addEventListener("mouseover", () => {
-        box.style.backgroundColor = "red";
+function attachHoverListeners(){
+    boxes.forEach((box) => {
+        box.addEventListener("mouseover", () => {
+            box.style.backgroundColor = "red";
+        });
     });
-});
+}
+
+button.addEventListener("click", () => {
+    let size = parseInt(prompt("Enter your grid size"));
+    defineGrid(size);
+})
+
+defineGrid(16);
